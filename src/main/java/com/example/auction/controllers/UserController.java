@@ -15,8 +15,14 @@ public class UserController {
         return null;
     }
 
-    @PostMapping("")
-    public UserResponse addUser(@RequestBody UserRequest user){
+    @PostMapping("/signup")
+    public UserResponse signUp(@RequestBody UserRequest user){
+
+        return null;
+    }
+
+    @PostMapping("/login")
+    public UserResponse login(@RequestBody UserRequest user){
 
         return null;
     }

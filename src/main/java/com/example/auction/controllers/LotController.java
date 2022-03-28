@@ -1,38 +1,49 @@
 package com.example.auction.controllers;
 
 import com.example.auction.controllers.models.LotRequest;
-import com.example.auction.controllers.models.LotResponse;
-import com.example.auction.controllers.models.LotsRequest;
-import com.example.auction.controllers.models.LotsResponse;
+import com.example.auction.controllers.models.LotDto;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/lots")
 public class LotController {
 
     @GetMapping("/{id}")
-    public LotRequest getLot(@PathVariable("id") String userId) {
+    public LotRequest getLot(@PathVariable("id") String lotId) {
 
         return null;
     }
 
 
     @PostMapping("")
-    public LotResponse addLot(@RequestBody LotRequest user){
+    public LotDto addLot(@RequestBody LotRequest lot){
 
         return null;
     }
 
-    @GetMapping("/userLots")
-    public LotsResponse getUserLots(@RequestBody LotsRequest lots){
+    @GetMapping("/user/{id}")
+    public List<LotDto> getUserLots(@PathVariable("id") String userId){
 
         return null;
     }
 
-    @GetMapping("/Lots")
-    public LotsResponse getLots(){
+    @GetMapping("/all")
+    public List<LotDto> getAllLots(){
 
         return null;
     }
 
+    @GetMapping("/user/lots")
+    public List<LotDto> getUserLots(){
+
+        return null;
+    }
+
+    @GetMapping("/top")
+    public List<LotDto> getTopLots(){
+
+        return null;
+    }
 }
