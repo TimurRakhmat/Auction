@@ -26,4 +26,10 @@ public class UserController {
 
         return null;
     }
+
+    @PostMapping("/money")
+    public UserResponse money(@RequestBody UserRequest user){
+
+        return null;
+    }
 }
