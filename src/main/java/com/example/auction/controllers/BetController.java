@@ -1,27 +1,30 @@
 package com.example.auction.controllers;
 
+import com.example.auction.controllers.exceptions.BetExistException;
+import com.example.auction.controllers.exceptions.BetNotExistException;
 import com.example.auction.controllers.models.BetRequest;
-import com.example.auction.controllers.models.BetResponse;
-import com.example.auction.controllers.models.UserRequest;
+import com.example.auction.controllers.models.BetDto;
+import com.example.auction.services.BetService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
-@RequestMapping("/bets")
+@RequestMapping("/api/bets")
 public class BetController {
-    private List<BetResponse> bets;
 
-    @PostMapping("")
-    public BetRequest addBet(@RequestBody BetRequest betRequest){
+    private final BetService betService;
 
-        return null;
+    public BetController(BetService betService) {
+        this.betService = betService;
     }
 
-    @GetMapping("")
-    public List<BetResponse> getBets(@RequestBody UserRequest userRequest){
+    @PostMapping("")
+    public BetDto saveBet(@RequestBody BetRequest betRequest) throws BetExistException {
+        return betService.saveBet(betRequest);
+    }
 
-        return null;
+    @GetMapping("/{id}")
+    public BetDto getBet(@PathVariable("id") String betId) throws BetNotExistException {
+        return betService.getBet(betId);
     }
 }
