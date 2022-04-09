@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/lots")
 public class LotController {
     private final LotService lotService;
+
     public LotController(LotService lotService) {
         this.lotService = lotService;
     }
@@ -25,7 +26,7 @@ public class LotController {
 
 
     @PostMapping("")
-    public String addLot(@RequestBody LotRequest lotRequest) throws  LotNotExistException{
+    public String addLot(@RequestBody LotRequest lotRequest) throws LotNotExistException {
         return lotService.saveLot(lotRequest).getId();
     }
 
@@ -59,6 +60,11 @@ public class LotController {
         return null;
     }
 
+    @GetMapping("/all")
+    public List<LotDto> getAllLots(){
+
+        return null;
+    }
 
     @GetMapping("/user/lots")
     public List<LotDto> getUserLots(){
@@ -71,5 +77,5 @@ public class LotController {
 
         return null;
     }
-     */
+    */
 }
