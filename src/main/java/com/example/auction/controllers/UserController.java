@@ -1,35 +1,35 @@
 package com.example.auction.controllers;
 
+import com.example.auction.controllers.exceptions.AuctionUserAlreadyExistException;
+import com.example.auction.controllers.exceptions.AuctionUserNotExisted;
 import com.example.auction.controllers.models.UserRequest;
-import com.example.auction.controllers.models.UserResponse;
+import com.example.auction.controllers.models.UserDto;
+import com.example.auction.security.models.OurAuthToken;
+import com.example.auction.services.AuctionUserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
+    private final AuctionUserService userService;
 
-    @GetMapping("/{id}")
-    public UserResponse getUser(@PathVariable("id") String userId) {
-
-        return null;
+    public UserController(AuctionUserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping("/signup")
-    public UserResponse signUp(@RequestBody UserRequest user){
-
-        return null;
+    @GetMapping("/{id}")
+    public UserDto getUser(@PathVariable("id") String userId) throws AuctionUserNotExisted {
+        return userService.getUser(userId);
     }
 
     @PostMapping("/login")
-    public UserResponse login(@RequestBody UserRequest user){
-
-        return null;
+    public UserDto login(@RequestBody UserRequest user, OurAuthToken authToken) throws AuctionUserNotExisted{
+        return userService.login(user, authToken);
     }
 
     @PostMapping("/money")
-    public UserResponse money(@RequestBody UserRequest user){
-
-        return null;
+    public UserDto money(@RequestBody UserRequest user){
+        return userService.money(user);
     }
 }
