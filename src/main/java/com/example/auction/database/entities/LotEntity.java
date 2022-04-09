@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -33,6 +34,13 @@ public class LotEntity {
     private String name;
     private Integer price;
     private String description;
+
+    @ElementCollection
+    private List<String> tags;
+
+    @ManyToOne
+    @JoinColumn(name="auction_user")
+    private AuctionUser user;
 
     ///////////////////////////////////////////////////////////////////////////
     //                      equals + hash

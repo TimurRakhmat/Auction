@@ -3,7 +3,9 @@ package com.example.auction.controllers;
 import com.example.auction.controllers.exceptions.LotNotExistException;
 import com.example.auction.controllers.models.LotRequest;
 import com.example.auction.controllers.models.LotDto;
+import com.example.auction.security.models.OurAuthToken;
 import com.example.auction.services.LotService;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +28,9 @@ public class LotController {
 
 
     @PostMapping("")
-    public String addLot(@RequestBody LotRequest lotRequest) throws LotNotExistException {
+    public String addLot(@RequestBody LotRequest lotRequest, OurAuthToken ourAuthToken) throws LotNotExistException {
         return lotService.saveLot(lotRequest).getId();
+        //TODO join token with lot
     }
 
     @GetMapping("")
