@@ -41,9 +41,4 @@ public class LotController {
         return null;
     }
 
-    @GetMapping("/top")
-    public List<LotDto> getTopLots(){
-
-        return null;
-    }
 }
