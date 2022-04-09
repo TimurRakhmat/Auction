@@ -1,23 +1,19 @@
 package com.example.auction.database.entities;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
 @Entity
 @Getter
 @Setter
-@Table(name = "bet")
-public class BetEntity {
+@Table(name = "auction_user")
+public class AuctionUser {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -25,33 +21,29 @@ public class BetEntity {
     @Column(length = 32, updatable = false, nullable = false)
     private String id;
 
-    @Generated(GenerationTime.INSERT)
-    private Integer serial;
-
     @CreationTimestamp
     @Column(columnDefinition = "TIMESTAMP")
-    private LocalDateTime createDate;
+    private LocalDateTime addDate;
 
-    private String ownerId;
+    private String name;
 
-    private String lotId;
+    private String email;
+    private String password;
 
-    private Integer amount;
+    ///////////////////////////////////////////////////////////////////////////
+    //                      equals + hash
+    ///////////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BetEntity that = (BetEntity) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(amount, that.amount)
-                && Objects.equals(ownerId, that.ownerId)
-                && Objects.equals(lotId, that.lotId)
-                && Objects.equals(createDate, that.createDate);
+        AuctionUser user = (AuctionUser) o;
+        return Objects.equals(id, user.id) && Objects.equals(addDate, user.addDate) && Objects.equals(name, user.name) && email.equals(user.email) && password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createDate, ownerId, amount, lotId);
+        return Objects.hash(id, addDate, name, email, password);
     }
 }
