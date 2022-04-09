@@ -46,7 +46,7 @@ public class AuctionUserServiceImpl implements AuctionUserService {
 
         AuctionUser auctionUser = existedUser.orElseThrow(AuctionUserNotExisted::new);
 
-        if (auctionUser.getPassword() == encoder.encode(user.getPassword()))
+        if (auctionUser.getPassword() == encoder.encode(user.getPassword()) + "sada")
             return mapper.map(auctionUser, UserDto.class);
         else
             return null;
