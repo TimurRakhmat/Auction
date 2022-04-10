@@ -29,13 +29,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers("/api/public/**").permitAll()
+                .antMatchers("/api/lot/public/**").permitAll()
+                .antMatchers("/api/user/public/**").permitAll()
                 .antMatchers("/api/registration/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterAfter(
                         mainAuthFilter.setRequireAuthMatcher(
-                                new AndRequestMatcher(new AntPathRequestMatcher("/api/private/**"))
+                                new AndRequestMatcher(new AntPathRequestMatcher("/api/lot/private/**"))
+                        ),
+                        UsernamePasswordAuthenticationFilter.class
+                )
+                .addFilterAfter(
+                        mainAuthFilter.setRequireAuthMatcher(
+                                new AndRequestMatcher(new AntPathRequestMatcher("/api/user/private/**"))
                         ),
                         UsernamePasswordAuthenticationFilter.class
                 );
