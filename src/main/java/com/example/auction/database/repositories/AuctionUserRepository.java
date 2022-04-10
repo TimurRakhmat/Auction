@@ -7,4 +7,10 @@ import java.util.Optional;
 
 public interface AuctionUserRepository extends JpaRepository<AuctionUser, String> {
     Optional<AuctionUser> findOptionalByEmail(String email);
+
+    @Override
+    Optional<AuctionUser> findById(String userId);
+
+    @Override
+    boolean existsById(String id);
 }
