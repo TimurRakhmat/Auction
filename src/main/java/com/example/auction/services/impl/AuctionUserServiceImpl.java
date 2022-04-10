@@ -42,19 +42,24 @@ public class AuctionUserServiceImpl implements AuctionUserService {
         if (authToken != null)
             return getUser(authToken.getUserId());
 
-        Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getLogin());
+        Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getEmail());
 
-        AuctionUser auctionUser = existedUser.orElseThrow(AuctionUserNotExisted::new);
+        AuctionUser auctionUser;
 
-        if (auctionUser.getPassword() == encoder.encode(user.getPassword()) + "sada")
+        if (existedUser.isPresent())
+            auctionUser = existedUser.get();
+        else
+            throw new AuctionUserNotExisted();
+
+        if (encoder.matches(user.getPassword() + "sada", auctionUser.getPassword()))
             return mapper.map(auctionUser, UserDto.class);
         else
-            return null;
+            throw new AuctionUserNotExisted();
     }
 
     @Override
     public UserDto money(UserRequest user) {
-        Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getMail());
+        Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getEmail());
         return mapper.map(user, UserDto.class);
     }
 }

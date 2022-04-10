@@ -36,13 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterAfter(
                         mainAuthFilter.setRequireAuthMatcher(
-                                new AndRequestMatcher(new AntPathRequestMatcher("/api/lot/private/**"))
-                        ),
-                        UsernamePasswordAuthenticationFilter.class
-                )
-                .addFilterAfter(
-                        mainAuthFilter.setRequireAuthMatcher(
-                                new AndRequestMatcher(new AntPathRequestMatcher("/api/user/private/**"))
+                                new AndRequestMatcher(new AntPathRequestMatcher("/api/private/**"))
                         ),
                         UsernamePasswordAuthenticationFilter.class
                 );

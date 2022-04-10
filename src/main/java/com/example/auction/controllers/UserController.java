@@ -9,7 +9,7 @@ import com.example.auction.services.AuctionUserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final AuctionUserService userService;
@@ -23,7 +23,7 @@ public class UserController {
         return userService.getUser(userId);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/public/login")
     public UserDto login(@RequestBody UserRequest user, OurAuthToken authToken) throws AuctionUserNotExisted{
         return userService.login(user, authToken);
     }
