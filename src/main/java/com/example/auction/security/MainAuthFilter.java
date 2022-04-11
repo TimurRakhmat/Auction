@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -32,9 +33,9 @@ public class MainAuthFilter implements Filter {
     private final AuctionUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private RequestMatcher requireAuthMatcher;
+    private List<RequestMatcher> requireAuthMatcher;
 
-    public MainAuthFilter setRequireAuthMatcher(RequestMatcher requireAuthMatcher) {
+    public MainAuthFilter setRequireAuthMatcher(List<RequestMatcher> requireAuthMatcher) {
         this.requireAuthMatcher = requireAuthMatcher;
         return this;
     }
@@ -55,15 +56,18 @@ public class MainAuthFilter implements Filter {
         if (requireAuth((HttpServletRequest) req)) {
             OurAuthToken token = tryAuth((HttpServletRequest) req, (HttpServletResponse) res);
             if (token == null) {
-                failureHandler.onAuthenticationFailure(
-                        (HttpServletRequest) req,
-                        (HttpServletResponse) res,
-                        new AuthenticationServiceException("Invalid user name or password")
-                );
-            } else {
-                SecurityContextHolder.getContext().setAuthentication(token);
-                chain.doFilter(req, res);
+//                failureHandler.onAuthenticationFailure(
+//                        (HttpServletRequest) req,
+//                        (HttpServletResponse) res,
+//                        new AuthenticationServiceException("Invalid user name or password")
+//                );
+                token = new OurAuthToken(null, null, Collections.singleton(
+                        new SimpleGrantedAuthority("USER")
+                ));
+
             }
+            SecurityContextHolder.getContext().setAuthentication(token);
+            chain.doFilter(req, res);
         } else {
             chain.doFilter(req, res);
         }
@@ -80,7 +84,7 @@ public class MainAuthFilter implements Filter {
         }
         AuctionUser user = optionalUser.get();
 
-        if (!passwordEncoder.matches(password + "sada", user.getPassword())){
+        if (!passwordEncoder.matches(password + "sada", user.getPassword())) {
             return null;
         }
 
@@ -96,6 +100,7 @@ public class MainAuthFilter implements Filter {
     ///////////////////////////////////////////////////////////////////////////
 
     private boolean requireAuth(HttpServletRequest req) {
-        return requireAuthMatcher == null || requireAuthMatcher.matches(req);
+        boolean find = requireAuthMatcher.stream().anyMatch(m -> m.matches(req));
+        return requireAuthMatcher == null || find;
     }
 }

@@ -16,4 +16,5 @@ public class LotDto {
     private Double startPrice;
     private String description;
     private List<String> tags;
+    private String image;
 }

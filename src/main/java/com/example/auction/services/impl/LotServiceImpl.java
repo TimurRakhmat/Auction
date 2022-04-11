@@ -11,6 +11,9 @@ import com.example.auction.services.LotService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.sound.sampled.AudioFormat;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,13 +37,13 @@ public class LotServiceImpl implements LotService {
     //////////////////////////////////////////////////////////////
 
     @Override
-    public LotDto saveLot(LotRequest lotRequest, OurAuthToken ourAuthToken) throws LotNotExistException {
-        if (lotRequest.getId() != null && lotRepository.existsById(lotRequest.getId())) {
-            throw new LotNotExistException();
-        }
+    public LotDto saveLot(LotRequest lotRequest, OurAuthToken ourAuthToken) throws UnsupportedEncodingException {
+
         LotEntity newLot = mapper.map(lotRequest, LotEntity.class);
 
+        var img = Base64.getDecoder().decode(lotRequest.getImageBase64().getBytes("UTF-8"));
 
+        newLot.setImage(img);
         newLot.setUser(auctionUserRepository.getById(ourAuthToken.getUserId()));
         lotRepository.save(newLot);
 
@@ -52,7 +55,11 @@ public class LotServiceImpl implements LotService {
         List<LotEntity> allLots = lotRepository.findAll();
 
         return allLots.stream()
-                .map(LotEntity -> mapper.map(LotEntity, LotDto.class))
+                .map(lotEntity -> {
+                    var mappedDto = mapper.map(lotEntity, LotDto.class);
+                    mappedDto.setImage(Base64.getEncoder().encodeToString(lotEntity.getImage()));
+                    return mappedDto;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -62,7 +69,9 @@ public class LotServiceImpl implements LotService {
 
         LotEntity lot = existedStudent.orElseThrow(LotNotExistException::new);
 
-        return mapper.map(lot, LotDto.class);
+        var mappedDto = mapper.map(lot, LotDto.class);
+        mappedDto.setImage(Base64.getEncoder().encodeToString(lot.getImage()));
+        return mappedDto;
     }
 
     @Override

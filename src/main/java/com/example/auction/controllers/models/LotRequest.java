@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class LotRequest {
     private String id;
     private String name;
+    private String imageBase64;
     private Double startPrice;
     private String description;
     private List<String> tags;

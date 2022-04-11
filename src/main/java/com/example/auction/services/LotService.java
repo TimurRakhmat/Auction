@@ -5,10 +5,12 @@ import com.example.auction.controllers.models.LotDto;
 import com.example.auction.controllers.models.LotRequest;
 import com.example.auction.security.models.OurAuthToken;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface LotService {
-    LotDto saveLot(LotRequest lotRequest, OurAuthToken ourAuthToken) throws LotNotExistException;
+    LotDto saveLot(LotRequest lotRequest, OurAuthToken ourAuthToken) throws LotNotExistException,
+            UnsupportedEncodingException;
 
     List<LotDto> getLots();
 

@@ -8,11 +8,12 @@ import com.example.auction.services.LotService;
 import com.sun.xml.bind.v2.TODO;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/private/lots")
+@RequestMapping("/api/lots")
 public class LotController {
     private final LotService lotService;
 
@@ -28,7 +29,8 @@ public class LotController {
 
 
     @PostMapping("")
-    public String addLot(@RequestBody LotRequest lotRequest, OurAuthToken ourAuthToken) throws LotNotExistException {
+    public String addLot(@RequestBody LotRequest lotRequest, OurAuthToken ourAuthToken) throws LotNotExistException,
+            UnsupportedEncodingException {
         return lotService.saveLot(lotRequest, ourAuthToken).getId();
     }
 

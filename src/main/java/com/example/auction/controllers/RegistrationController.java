@@ -23,4 +23,6 @@ public class RegistrationController {
     public UserDto signup(@RequestBody RegistrationParamsRequest params) throws AuctionUserAlreadyExistException {
         return registrationService.signup(params);
     }
+
+
 }
