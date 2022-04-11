@@ -32,9 +32,13 @@ public class Bet {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createDate;
 
-    private String ownerId;
+    @ManyToOne
+    @JoinColumn(name="auction_user")
+    private AuctionUser owner;
 
-    private String lotId;
+    @OneToOne
+    @JoinColumn(name="lot")
+    private LotEntity ownLot;
 
     private Integer amount;
 
@@ -42,16 +46,16 @@ public class Bet {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Bet that = (Bet) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(amount, that.amount)
-                && Objects.equals(ownerId, that.ownerId)
-                && Objects.equals(lotId, that.lotId)
-                && Objects.equals(createDate, that.createDate);
+        Bet bet = (Bet) o;
+        return Objects.equals(id, bet.id) && Objects.equals(serial, bet.serial)
+                && Objects.equals(createDate, bet.createDate)
+                && Objects.equals(owner, bet.owner)
+                && Objects.equals(ownLot, bet.ownLot)
+                && Objects.equals(amount, bet.amount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createDate, ownerId, amount, lotId);
+        return Objects.hash(id, serial, createDate, owner, ownLot, amount);
     }
 }

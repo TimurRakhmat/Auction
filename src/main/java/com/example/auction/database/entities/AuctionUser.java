@@ -2,6 +2,7 @@ package com.example.auction.database.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.el.util.Validation;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -30,7 +31,7 @@ public class AuctionUser {
     private String email;
     private String password;
 
-    private Float balance;
+    private Double balance;
 
     ///////////////////////////////////////////////////////////////////////////
     //                      equals + hash

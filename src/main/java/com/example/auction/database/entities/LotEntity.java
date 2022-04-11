@@ -42,6 +42,10 @@ public class LotEntity {
     @JoinColumn(name="auction_user")
     private AuctionUser user;
 
+    @OneToOne
+    @JoinColumn(name="bet")
+    private Bet bestBet;
+
     ///////////////////////////////////////////////////////////////////////////
     //                      equals + hash
     ///////////////////////////////////////////////////////////////////////////

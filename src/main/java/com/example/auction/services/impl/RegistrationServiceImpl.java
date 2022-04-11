@@ -36,6 +36,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         String password = passwordEncoder.encode(user.getPassword() + "sada");
 
         user.setPassword(password);
+        user.setBalance(0.0);
         auctionUserRepository.save(user);
         return mapper.map(user, UserDto.class);
     }
