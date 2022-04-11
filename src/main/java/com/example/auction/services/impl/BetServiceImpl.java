@@ -43,7 +43,7 @@ public class BetServiceImpl implements BetService {
 
         LotEntity lot = optionalLot.get();
 
-        if(lot.getBestBet().getAmount() >= betRequest.getAmount())
+        if(lot.getBestBet() != null && lot.getBestBet().getAmount() >= betRequest.getAmount())
             throw new BetLessException();
 
         Bet newBet = new Bet();

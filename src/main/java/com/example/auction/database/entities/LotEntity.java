@@ -28,9 +28,6 @@ public class LotEntity {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime addDate;
 
-    @Generated(GenerationTime.INSERT)
-    private Integer serial;
-
     private String name;
     private Integer price;
     private String description;
@@ -57,12 +54,11 @@ public class LotEntity {
         LotEntity that = (LotEntity) o;
         return Objects.equals(id, that.id)
                 && Objects.equals(addDate, that.addDate)
-                && Objects.equals(serial, that.serial)
                 && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, addDate, serial, name);
+        return Objects.hash(id, addDate, name);
     }
 }

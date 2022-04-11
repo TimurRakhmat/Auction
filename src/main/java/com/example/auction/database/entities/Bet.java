@@ -25,9 +25,6 @@ public class Bet {
     @Column(length = 32, updatable = false, nullable = false)
     private String id;
 
-    @Generated(GenerationTime.INSERT)
-    private Integer serial;
-
     @CreationTimestamp
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createDate;
@@ -47,7 +44,7 @@ public class Bet {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bet bet = (Bet) o;
-        return Objects.equals(id, bet.id) && Objects.equals(serial, bet.serial)
+        return Objects.equals(id, bet.id)
                 && Objects.equals(createDate, bet.createDate)
                 && Objects.equals(owner, bet.owner)
                 && Objects.equals(ownLot, bet.ownLot)
@@ -56,6 +53,6 @@ public class Bet {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, serial, createDate, owner, ownLot, amount);
+        return Objects.hash(id, createDate, owner, ownLot, amount);
     }
 }

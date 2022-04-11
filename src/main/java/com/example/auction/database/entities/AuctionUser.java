@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -32,6 +33,12 @@ public class AuctionUser {
     private String password;
 
     private Double balance;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Bet> ownBets;
+
+    @OneToMany(mappedBy = "user")
+    private List<LotEntity> ownLots;
 
     ///////////////////////////////////////////////////////////////////////////
     //                      equals + hash

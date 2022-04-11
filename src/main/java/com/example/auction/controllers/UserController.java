@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/money")
-    public UserDto money(@RequestBody UserRequest user){
+    public UserDto money(@RequestBody UserRequest user, OurAuthToken ourAuthToken) {
         return userService.money(user);
     }
 }

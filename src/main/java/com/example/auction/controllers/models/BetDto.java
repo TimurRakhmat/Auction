@@ -13,5 +13,5 @@ public class BetDto {
     private String id;
     private String lotId;
     private Integer amount;
-    private LocalDateTime creationDate;
+    private LocalDateTime createDate;
 }

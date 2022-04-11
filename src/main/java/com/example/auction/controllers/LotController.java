@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/lots")
+@RequestMapping("/api/private/lots")
 public class LotController {
     private final LotService lotService;
 
@@ -29,56 +29,12 @@ public class LotController {
 
     @PostMapping("")
     public String addLot(@RequestBody LotRequest lotRequest, OurAuthToken ourAuthToken) throws LotNotExistException {
-        return lotService.saveLot(lotRequest).getId();
-        //TODO join token with lot
+        return lotService.saveLot(lotRequest, ourAuthToken).getId();
     }
 
-    @GetMapping("")
-    public List<LotDto> getStudents(@RequestParam(value = "q", required = false) String q) {
-        List<LotDto> lots = lotService.getLots();
-        if (q == null) {
-            return lots;
-        }
-        return lots.stream()
-                .filter(lot -> lot.getName().contains(q) || String.valueOf(lot.getDescription()).contains(q))
-                .collect(Collectors.toList());
-    }
 
     @DeleteMapping("/{id}")
     public void deleteLot(@PathVariable("id") String lotId) throws LotNotExistException {
         lotService.deleteLot(lotId);
     }
-
-
-    /*
-    @GetMapping("/all")
-    public List<LotDto> getAllLots(){
-
-        return null;
-    }
-
-    @GetMapping("/user/{id}")
-    public List<LotDto> getUserLots(@PathVariable("id") String userId){
-
-        return null;
-    }
-
-    @GetMapping("/all")
-    public List<LotDto> getAllLots(){
-
-        return null;
-    }
-
-    @GetMapping("/user/lots")
-    public List<LotDto> getUserLots(){
-
-        return null;
-    }
-
-    @GetMapping("/top")
-    public List<LotDto> getTopLots(){
-
-        return null;
-    }
-    */
 }
