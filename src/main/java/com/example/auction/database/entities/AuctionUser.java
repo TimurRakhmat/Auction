@@ -32,7 +32,7 @@ public class AuctionUser {
     private String email;
     private String password;
 
-    private Double balance;
+    private Float balance;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Bet> ownBets;
