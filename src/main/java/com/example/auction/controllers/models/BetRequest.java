@@ -9,5 +9,5 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BetRequest {
     private String lotId;
-    private Integer amount;
+    private Double amount;
 }

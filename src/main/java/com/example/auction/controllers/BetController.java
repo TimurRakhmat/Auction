@@ -1,9 +1,6 @@
 package com.example.auction.controllers;
 
-import com.example.auction.controllers.exceptions.BetExistException;
-import com.example.auction.controllers.exceptions.BetLessException;
-import com.example.auction.controllers.exceptions.BetNotExistException;
-import com.example.auction.controllers.exceptions.LotNotExistException;
+import com.example.auction.controllers.exceptions.*;
 import com.example.auction.controllers.models.BetRequest;
 import com.example.auction.controllers.models.BetDto;
 import com.example.auction.security.models.OurAuthToken;
@@ -24,8 +21,8 @@ public class BetController {
     }
 
     @PostMapping("")
-    public BetDto saveBet(@RequestBody BetRequest betRequest, OurAuthToken ourAuthToken) throws BetLessException,
-            LotNotExistException {
+    public BetDto saveBet(@RequestBody BetRequest betRequest, OurAuthToken ourAuthToken) throws BetStepException,
+            LotNotExistException, AuctionUserNotEnoughMoneyException {
         return betService.saveBet(betRequest, ourAuthToken);
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
 public class LotRequest {
     private String id;
     private String name;
-    private  Integer price;
+    private Double startPrice;
     private String description;
     private List<String> tags;
 }

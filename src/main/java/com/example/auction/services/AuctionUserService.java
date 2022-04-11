@@ -8,6 +8,6 @@ import com.example.auction.security.models.OurAuthToken;
 
 public interface AuctionUserService {
     UserDto getUser(String userId) throws AuctionUserNotExisted;
-    UserDto login(UserRequest user, OurAuthToken authToken) throws AuctionUserNotExisted;
-    UserDto money(UserRequest user);
+    UserDto login(UserRequest user) throws AuctionUserNotExisted;
+    UserDto money(UserRequest user, OurAuthToken ourAuthToken);
 }

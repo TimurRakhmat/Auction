@@ -11,4 +11,5 @@ public class UserRequest {
     private String login;
     private String password;
     private String email;
+    private Double balance;
 }

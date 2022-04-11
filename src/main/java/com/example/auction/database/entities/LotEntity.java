@@ -29,17 +29,17 @@ public class LotEntity {
     private LocalDateTime addDate;
 
     private String name;
-    private Integer price;
+    private Double startPrice;
     private String description;
 
     @ElementCollection
     private List<String> tags;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="auction_user")
     private AuctionUser user;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="bet")
     private Bet bestBet;
 

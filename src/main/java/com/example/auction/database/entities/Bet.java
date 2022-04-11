@@ -29,15 +29,15 @@ public class Bet {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="auction_user")
     private AuctionUser owner;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="lot")
     private LotEntity ownLot;
 
-    private Integer amount;
+    private Double amount;
 
     @Override
     public boolean equals(Object o) {

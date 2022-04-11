@@ -72,10 +72,12 @@ public class LotServiceImpl implements LotService {
         }
 
         LotEntity lot = lotRepository.getById(lotRequest.getId());
+
         lot.setName(lotRequest.getName());
         lot.setDescription(lotRequest.getDescription());
-        lot.setPrice(lotRequest.getPrice());
+        lot.setStartPrice(lotRequest.getStartPrice());
         lot.setTags(lotRequest.getTags());
+
         lotRepository.save(lot);
     }
 

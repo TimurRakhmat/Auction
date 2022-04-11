@@ -34,10 +34,10 @@ public class AuctionUser {
 
     private Double balance;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Bet> ownBets;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<LotEntity> ownLots;
 
     ///////////////////////////////////////////////////////////////////////////
