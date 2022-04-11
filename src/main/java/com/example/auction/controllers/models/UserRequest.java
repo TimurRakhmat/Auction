@@ -10,5 +10,5 @@ import lombok.Data;
 public class UserRequest {
     private String login;
     private String password;
-    private String mail;
+    private String email;
 }

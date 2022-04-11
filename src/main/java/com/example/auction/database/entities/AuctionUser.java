@@ -30,20 +30,23 @@ public class AuctionUser {
     private String email;
     private String password;
 
+    private Float balance;
+
     ///////////////////////////////////////////////////////////////////////////
     //                      equals + hash
     ///////////////////////////////////////////////////////////////////////////
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuctionUser user = (AuctionUser) o;
-        return Objects.equals(id, user.id) && Objects.equals(addDate, user.addDate) && Objects.equals(name, user.name) && email.equals(user.email) && password.equals(user.password);
+        AuctionUser that = (AuctionUser) o;
+        return Objects.equals(id, that.id) && Objects.equals(addDate, that.addDate) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(balance, that.balance);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, addDate, name, email, password);
+        return Objects.hash(id, addDate, name, email, password, balance);
     }
 }

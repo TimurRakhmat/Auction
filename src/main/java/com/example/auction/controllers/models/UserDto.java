@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDto {
     private String id;
+    private Float money;
+    private String email;
 }
