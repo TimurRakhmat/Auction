@@ -60,6 +60,11 @@ public class AuctionUserServiceImpl implements AuctionUserService {
     @Override
     public UserDto money(UserRequest user) {
         Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getEmail());
-        return mapper.map(user, UserDto.class);
+        //AuctionUser existedUser = userRepository.findOptionalByEmail(user.getEmail());
+        AuctionUser updatedUser = mapper.map(existedUser, AuctionUser.class);
+        updatedUser.setBalance(user.getBalance());
+        userRepository.save(updatedUser);
+
+        return mapper.map(existedUser, UserDto.class);
     }
 }
