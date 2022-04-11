@@ -31,7 +31,7 @@ public class AuctionUser {
     private String email;
     private String password;
 
-    private Float balance;
+    private Double balance;
 
     ///////////////////////////////////////////////////////////////////////////
     //                      equals + hash
