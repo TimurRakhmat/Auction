@@ -12,5 +12,4 @@ public interface BetService {
             LotNotExistException, AuctionUserNotEnoughMoneyException;
 
     BetDto getBet(String id) throws BetNotExistException;
-    List<BetDto> getUserBets(String id);
 }

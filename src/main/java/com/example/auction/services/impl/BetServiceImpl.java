@@ -95,12 +95,6 @@ public class BetServiceImpl implements BetService {
         return modelMapper.map(findBet, BetDto.class);
     }
 
-    @Override
-    public List<BetDto> getUserBets(String userId) {
-        return betRepository.findBetsByOwnerId(userId).stream()
-                .map(obj -> modelMapper.map(obj, BetDto.class)).collect(Collectors.toList());
-    }
-
     private Integer getLotBetStep(@NotNull LotEntity lotEntity){
         int step = (int)Math.round(lotEntity.getStartPrice() / 100);
         return Math.max(step, 1000);

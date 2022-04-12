@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserDto {
     private String id;
     private Double balance;
-    private String email;
+    private String login;
 }

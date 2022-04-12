@@ -1,5 +1,6 @@
 package com.example.auction.services.impl;
 
+import com.example.auction.controllers.exceptions.LotAlreadyExistException;
 import com.example.auction.controllers.exceptions.LotNotExistException;
 import com.example.auction.controllers.models.LotDto;
 import com.example.auction.controllers.models.LotRequest;
@@ -51,19 +52,6 @@ public class LotServiceImpl implements LotService {
     }
 
     @Override
-    public List<LotDto> getLots() {
-        List<LotEntity> allLots = lotRepository.findAll();
-
-        return allLots.stream()
-                .map(lotEntity -> {
-                    var mappedDto = mapper.map(lotEntity, LotDto.class);
-                    mappedDto.setImage(Base64.getEncoder().encodeToString(lotEntity.getImage()));
-                    return mappedDto;
-                })
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public LotDto getLot(String lotId) throws LotNotExistException {
         Optional<LotEntity> existedStudent = lotRepository.findOptionalById(lotId);
 
@@ -72,22 +60,6 @@ public class LotServiceImpl implements LotService {
         var mappedDto = mapper.map(lot, LotDto.class);
         mappedDto.setImage(Base64.getEncoder().encodeToString(lot.getImage()));
         return mappedDto;
-    }
-
-    @Override
-    public void updateLot(LotRequest lotRequest) throws LotNotExistException {
-        if (lotRequest.getId() == null || !lotRepository.existsById(lotRequest.getId())) {
-            throw new LotNotExistException();
-        }
-
-        LotEntity lot = lotRepository.getById(lotRequest.getId());
-
-        lot.setName(lotRequest.getName());
-        lot.setDescription(lotRequest.getDescription());
-        lot.setStartPrice(lotRequest.getStartPrice());
-        lot.setTags(lotRequest.getTags());
-
-        lotRepository.save(lot);
     }
 
     @Override

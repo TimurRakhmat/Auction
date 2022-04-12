@@ -30,9 +30,4 @@ public class BetController {
     public BetDto getBet(@PathVariable("id") String betId) throws BetNotExistException {
         return betService.getBet(betId);
     }
-
-    @GetMapping("")
-    public List<BetDto> getUserBets(OurAuthToken ourAuthToken) {
-        return betService.getUserBets(ourAuthToken.getUserId());
-    }
 }

@@ -1,8 +1,10 @@
 package com.example.auction.controllers;
 
 import com.example.auction.controllers.exceptions.AuctionUserAlreadyExistException;
+import com.example.auction.controllers.exceptions.AuctionUserNotExisted;
 import com.example.auction.controllers.models.RegistrationParamsRequest;
 import com.example.auction.controllers.models.UserDto;
+import com.example.auction.controllers.models.UserRequest;
 import com.example.auction.services.RegistrationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,5 +26,8 @@ public class RegistrationController {
         return registrationService.signup(params);
     }
 
-
+    @PostMapping("/login")
+    public UserDto login(@RequestBody UserRequest userRequest) throws AuctionUserNotExisted {
+        return registrationService.login(userRequest);
+    }
 }

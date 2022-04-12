@@ -2,6 +2,8 @@ package com.example.auction.services.impl;
 
 import com.example.auction.controllers.exceptions.AuctionUserAlreadyExistException;
 import com.example.auction.controllers.exceptions.AuctionUserNotExisted;
+import com.example.auction.controllers.models.BetDto;
+import com.example.auction.controllers.models.LotDto;
 import com.example.auction.controllers.models.UserDto;
 import com.example.auction.controllers.models.UserRequest;
 import com.example.auction.database.entities.AuctionUser;
@@ -12,8 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.lang.management.OperatingSystemMXBean;
-import java.util.HashSet;
+import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,41 +32,69 @@ public class AuctionUserServiceImpl implements AuctionUserService {
     }
 
     @Override
-    public UserDto getUser(String userId) throws AuctionUserNotExisted{
-        Optional<AuctionUser> existedUser = userRepository.findById(userId);
+    public UserDto getUser(OurAuthToken ourAuthToken){
+        if (ourAuthToken == null)
+            return null;
 
-        AuctionUser user = existedUser.orElseThrow(AuctionUserNotExisted::new);
+        Optional<AuctionUser> existedUser = userRepository.findById(ourAuthToken.getUserId());
+        AuctionUser user = existedUser.get();
         return mapper.map(user, UserDto.class);
     }
 
     @Override
-    public UserDto login(UserRequest user, OurAuthToken authToken) throws AuctionUserNotExisted{
-        if (authToken != null)
-            return getUser(authToken.getUserId());
+    public UserDto getUser(String userId) throws AuctionUserNotExisted{
+        Optional<AuctionUser> existedUser = userRepository.findById(userId);
 
-        Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getEmail());
-
-        AuctionUser auctionUser;
-
-        if (existedUser.isPresent())
-            auctionUser = existedUser.get();
-        else
-            throw new AuctionUserNotExisted();
-
-        if (encoder.matches(user.getPassword() + "sada", auctionUser.getPassword()))
-            return mapper.map(auctionUser, UserDto.class);
-        else
-            throw new AuctionUserNotExisted();
+        AuctionUser user = existedUser.orElseThrow(AuctionUserNotExisted::new);
+        var mappedDto = mapper.map(user, UserDto.class);
+        mappedDto.setBalance(null);
+        return mappedDto;
     }
 
     @Override
-    public UserDto money(UserRequest user) {
+    public UserDto money(UserRequest user, OurAuthToken ourAuthToken) {
+        if (ourAuthToken == null)
+            return null;
+
         Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getEmail());
-        //AuctionUser existedUser = userRepository.findOptionalByEmail(user.getEmail());
         AuctionUser updatedUser = mapper.map(existedUser, AuctionUser.class);
         updatedUser.setBalance(user.getBalance());
         userRepository.save(updatedUser);
 
         return mapper.map(existedUser, UserDto.class);
+    }
+
+    @Override
+    public List<LotDto> getUserLots(String userId) throws AuctionUserNotExisted{
+        Optional<AuctionUser> existedUser = userRepository.findById(userId);
+        AuctionUser user = existedUser.orElseThrow(AuctionUserNotExisted::new);
+
+        return user.getOwnLots().stream().map(lot -> {
+            var mappedDto = mapper.map(lot, LotDto.class);
+            if(lot.getImage() != null)
+                mappedDto.setImage(Base64.getEncoder().encodeToString(lot.getImage()));
+            return mappedDto;
+        }).toList();
+    }
+
+    @Override
+    public List<LotDto> getCurrentUserLots(OurAuthToken ourAuthToken){
+        Optional<AuctionUser> existedUser = userRepository.findById(ourAuthToken.getUserId());
+        AuctionUser user = existedUser.get();
+
+        return user.getOwnLots().stream().map(lot -> {
+            var mappedDto = mapper.map(lot, LotDto.class);
+            if(lot.getImage() != null)
+                mappedDto.setImage(Base64.getEncoder().encodeToString(lot.getImage()));
+            return mappedDto;
+        }).toList();
+    }
+
+    @Override
+    public List<BetDto> getCurrentUserBets(OurAuthToken ourAuthToken){
+        Optional<AuctionUser> existedUser = userRepository.findById(ourAuthToken.getUserId());
+        AuctionUser user = existedUser.get();
+
+        return user.getOwnBets().stream().map(bet -> mapper.map(bet, BetDto.class)).toList();
     }
 }

@@ -2,7 +2,6 @@ package com.example.auction.database.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.el.util.Validation;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -27,7 +26,7 @@ public class AuctionUser {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime addDate;
 
-    private String name;
+    private String login;
 
     private String email;
     private String password;
@@ -50,11 +49,11 @@ public class AuctionUser {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AuctionUser that = (AuctionUser) o;
-        return Objects.equals(id, that.id) && Objects.equals(addDate, that.addDate) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(balance, that.balance);
+        return Objects.equals(id, that.id) && Objects.equals(addDate, that.addDate) && Objects.equals(login, that.login) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(balance, that.balance);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, addDate, name, email, password, balance);
+        return Objects.hash(id, addDate, login, email, password, balance);
     }
 }
