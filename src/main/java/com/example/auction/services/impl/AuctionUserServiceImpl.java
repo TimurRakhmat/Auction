@@ -38,7 +38,10 @@ public class AuctionUserServiceImpl implements AuctionUserService {
     }
 
     @Override
-    public UserDto login(UserRequest user) throws AuctionUserNotExisted{
+    public UserDto login(UserRequest user, OurAuthToken authToken) throws AuctionUserNotExisted{
+        if (authToken != null)
+            return getUser(authToken.getUserId());
+
         Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getEmail());
 
         AuctionUser auctionUser;
@@ -55,10 +58,13 @@ public class AuctionUserServiceImpl implements AuctionUserService {
     }
 
     @Override
-    public UserDto money(UserRequest user, OurAuthToken ourAuthToken) {
-        AuctionUser auctionUser = userRepository.getById(ourAuthToken.getUserId());
-        auctionUser.setBalance(auctionUser.getBalance() + user.getBalance());
-        userRepository.save(auctionUser);
-        return mapper.map(auctionUser, UserDto.class);
+    public UserDto money(UserRequest user) {
+        Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getEmail());
+        //AuctionUser existedUser = userRepository.findOptionalByEmail(user.getEmail());
+        AuctionUser updatedUser = mapper.map(existedUser, AuctionUser.class);
+        updatedUser.setBalance(user.getBalance());
+        userRepository.save(updatedUser);
+
+        return mapper.map(existedUser, UserDto.class);
     }
 }
