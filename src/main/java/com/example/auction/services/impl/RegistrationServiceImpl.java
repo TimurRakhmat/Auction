@@ -39,6 +39,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         user.setPassword(password);
         user.setBalance(0.0);
+        user.setLogin(registrationParamsRequest.getName());
         auctionUserRepository.save(user);
         return mapper.map(user, UserDto.class);
     }
