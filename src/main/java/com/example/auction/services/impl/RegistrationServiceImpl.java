@@ -48,14 +48,14 @@ public class RegistrationServiceImpl implements RegistrationService {
     public UserDto login(UserRequest userRequest) throws AuctionUserNotExisted{
         Optional<AuctionUser> existedUser = auctionUserRepository.findOptionalByEmail(userRequest.getEmail());
 
-        if (!existedUser.isPresent())
+        if (existedUser.isEmpty())
             throw new AuctionUserNotExisted();
 
         AuctionUser auctionUser = existedUser.get();
 
-        if (passwordEncoder.matches(UserRequest.class + "sada", auctionUser.getPassword()))
+        if (passwordEncoder.matches(userRequest.getPassword()+ "sada", auctionUser.getPassword()))
             return mapper.map(auctionUser, UserDto.class);
         else
-            return null;
+            throw new AuctionUserNotExisted();
     }
 }
