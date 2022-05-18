@@ -54,7 +54,7 @@ public class BetServiceImpl implements BetService {
 
         // Check correctable bet amount
         if (lot.getBestBet() != null
-                && (lot.getBestBet().getAmount() - betRequest.getAmount()) < getLotBetStep(lot)) {
+                && (betRequest.getAmount() - lot.getBestBet().getAmount()) < getLotBetStep(lot)) {
             throw new BetStepException();
         }
         else if (betRequest.getAmount() < (lot.getStartPrice() + getLotBetStep(lot))){

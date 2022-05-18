@@ -54,10 +54,10 @@ public class AuctionUserServiceImpl implements AuctionUserService {
     @Override
     public UserDto money(UserRequest user, OurAuthToken ourAuthToken) {
         if (ourAuthToken == null)
-            return null;
+            return null ;
 
         Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getEmail());
-        AuctionUser updatedUser = mapper.map(existedUser, AuctionUser.class);
+        AuctionUser updatedUser = existedUser.get();
         updatedUser.setBalance(user.getBalance());
         userRepository.save(updatedUser);
 

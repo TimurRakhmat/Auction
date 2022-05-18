@@ -38,14 +38,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeHttpRequests()
                 .antMatchers("/api/user/**").permitAll()
                 .antMatchers("/api/registration/**").permitAll()
-                .antMatchers("/api/lot/**").permitAll()
+                .antMatchers("/api/lots/**").permitAll()
+                .antMatchers("/api/bets/**").permitAll()
+                //.antMatchers("/api/bets/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterAfter(
                         mainAuthFilter.setRequireAuthMatcher(
                                 List.of(
-                                        new AndRequestMatcher(new AntPathRequestMatcher("/api/profile/**"))
-//                                        new AndRequestMatcher(new AntPathRequestMatcher("/api/private/**")),
+                                        new AndRequestMatcher(new AntPathRequestMatcher("/api/profile/**")),
+                                        new AndRequestMatcher(new AntPathRequestMatcher("/api/lots/private/**")),
+                                        new AndRequestMatcher(new AntPathRequestMatcher("/api/bets/private/**"))
 //                                        new AndRequestMatcher(new AntPathRequestMatcher("/api/private/**")),
 //                                        new AndRequestMatcher(new AntPathRequestMatcher("/api/private/**"))
                                 )

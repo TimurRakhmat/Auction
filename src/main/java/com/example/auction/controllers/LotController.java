@@ -24,13 +24,12 @@ public class LotController {
         return lotService.getLot(lotId);
     }
 
-    @PostMapping("")
+    @PostMapping("/private/")
     public String addLot(@RequestBody LotRequest lotRequest, OurAuthToken ourAuthToken) throws UnsupportedEncodingException {
         return lotService.saveLot(lotRequest, ourAuthToken).getId();
     }
 
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/private/{id}")
     public void deleteLot(@PathVariable("id") String lotId) throws LotNotExistException {
         lotService.deleteLot(lotId);
     }

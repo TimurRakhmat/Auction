@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/private/bets")
+@RequestMapping("/api/bets")
 public class BetController {
 
     private final BetService betService;
@@ -20,7 +20,7 @@ public class BetController {
         this.betService = betService;
     }
 
-    @PostMapping("")
+    @PostMapping("/private")
     public BetDto saveBet(@RequestBody BetRequest betRequest, OurAuthToken ourAuthToken) throws BetStepException,
             LotNotExistException, AuctionUserNotEnoughMoneyException {
         return betService.saveBet(betRequest, ourAuthToken);

@@ -39,7 +39,6 @@ public class LotServiceImpl implements LotService {
 
     @Override
     public LotDto saveLot(LotRequest lotRequest, OurAuthToken ourAuthToken) throws UnsupportedEncodingException {
-
         LotEntity newLot = mapper.map(lotRequest, LotEntity.class);
 
         var img = Base64.getDecoder().decode(lotRequest.getImageBase64().getBytes("UTF-8"));
