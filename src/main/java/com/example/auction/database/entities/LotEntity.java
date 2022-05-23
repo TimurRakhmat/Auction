@@ -27,10 +27,13 @@ public class LotEntity {
     @CreationTimestamp
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime addDate;
+    private boolean sold;
 
     private String name;
     private Double startPrice;
     private String description;
+    private Integer popularity;
+    private String linkToImage;
 
     @ElementCollection
     private List<String> tags;

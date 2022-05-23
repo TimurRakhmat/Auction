@@ -13,4 +13,5 @@ public class BetDto {
     private String id;
     private Double amount;
     private LocalDateTime createDate;
+    private String ownLotId;
 }

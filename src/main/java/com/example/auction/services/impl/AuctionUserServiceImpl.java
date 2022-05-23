@@ -72,8 +72,6 @@ public class AuctionUserServiceImpl implements AuctionUserService {
 
         return user.getOwnLots().stream().map(lot -> {
             var mappedDto = mapper.map(lot, LotDto.class);
-            if(lot.getImage() != null)
-                mappedDto.setImage(Base64.getEncoder().encodeToString(lot.getImage()));
             if (lot.getBestBet() != null) {
                 mappedDto.setBestBet(mapper.map(lot.getBestBet(), BetDto.class));
             }
@@ -88,8 +86,6 @@ public class AuctionUserServiceImpl implements AuctionUserService {
 
         return user.getOwnLots().stream().map(lot -> {
             var mappedDto = mapper.map(lot, LotDto.class);
-            if(lot.getImage() != null)
-                mappedDto.setImage(Base64.getEncoder().encodeToString(lot.getImage()));
 
             if (lot.getBestBet() != null) {
                 mappedDto.setBestBet(mapper.map(lot.getBestBet(), BetDto.class));

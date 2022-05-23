@@ -49,8 +49,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                         new AndRequestMatcher(new AntPathRequestMatcher("/api/profile/**")),
                                         new AndRequestMatcher(new AntPathRequestMatcher("/api/lots/private/**")),
                                         new AndRequestMatcher(new AntPathRequestMatcher("/api/bets/private/**"))
-//                                        new AndRequestMatcher(new AntPathRequestMatcher("/api/private/**")),
-//                                        new AndRequestMatcher(new AntPathRequestMatcher("/api/private/**"))
                                 )
                         ),
                         UsernamePasswordAuthenticationFilter.class

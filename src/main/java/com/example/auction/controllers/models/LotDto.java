@@ -18,5 +18,6 @@ public class LotDto {
     private String description;
     private List<String> tags;
     private BetDto bestBet;
-    private String image;
+    private String linkToImage;
+    private Integer popularity;
 }

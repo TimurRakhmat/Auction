@@ -3,6 +3,7 @@ package com.example.auction.services.impl;
 import com.example.auction.controllers.exceptions.*;
 import com.example.auction.controllers.models.BetRequest;
 import com.example.auction.controllers.models.BetDto;
+import com.example.auction.controllers.models.LotDto;
 import com.example.auction.database.entities.AuctionUser;
 import com.example.auction.database.entities.Bet;
 import com.example.auction.database.entities.LotEntity;
@@ -56,8 +57,7 @@ public class BetServiceImpl implements BetService {
         if (lot.getBestBet() != null
                 && (betRequest.getAmount() - lot.getBestBet().getAmount()) < getLotBetStep(lot)) {
             throw new BetStepException();
-        }
-        else if (betRequest.getAmount() < (lot.getStartPrice() + getLotBetStep(lot))){
+        } else if (betRequest.getAmount() < (lot.getStartPrice() + getLotBetStep(lot))) {
             throw new BetStepException();
         }
 
@@ -66,6 +66,8 @@ public class BetServiceImpl implements BetService {
         if (lot.getBestBet() != null)
             lot.getBestBet().getOwner().setBalance(lot.getBestBet().getOwner().getBalance()
                     + lot.getBestBet().getAmount());
+
+        lot.setPopularity(lot.getPopularity() + 1);
 
 
         // Subtract new best bet owner money
@@ -92,11 +94,13 @@ public class BetServiceImpl implements BetService {
 
         Bet findBet = findOptionalBet.get();
 
-        return modelMapper.map(findBet, BetDto.class);
+        BetDto mappedBetDto = modelMapper.map(findBet, BetDto.class);
+        mappedBetDto.setOwnLotId(findBet.getOwnLot().getId());
+        return mappedBetDto;
     }
 
-    private Integer getLotBetStep(@NotNull LotEntity lotEntity){
-        int step = (int)Math.round(lotEntity.getStartPrice() / 100);
+    private Integer getLotBetStep(@NotNull LotEntity lotEntity) {
+        int step = (int) Math.round(lotEntity.getStartPrice() / 100);
         return Math.max(step, 1000);
     }
 
