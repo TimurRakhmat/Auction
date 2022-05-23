@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BetDto {
     private String id;
-    private String lotId;
     private Double amount;
     private LocalDateTime createDate;
 }

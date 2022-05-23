@@ -7,6 +7,7 @@ import com.example.auction.controllers.models.LotDto;
 import com.example.auction.controllers.models.UserDto;
 import com.example.auction.controllers.models.UserRequest;
 import com.example.auction.database.entities.AuctionUser;
+import com.example.auction.database.entities.Bet;
 import com.example.auction.database.repositories.AuctionUserRepository;
 import com.example.auction.security.models.OurAuthToken;
 import com.example.auction.services.AuctionUserService;
@@ -73,6 +74,9 @@ public class AuctionUserServiceImpl implements AuctionUserService {
             var mappedDto = mapper.map(lot, LotDto.class);
             if(lot.getImage() != null)
                 mappedDto.setImage(Base64.getEncoder().encodeToString(lot.getImage()));
+            if (lot.getBestBet() != null) {
+                mappedDto.setBestBet(mapper.map(lot.getBestBet(), BetDto.class));
+            }
             return mappedDto;
         }).toList();
     }
@@ -86,6 +90,10 @@ public class AuctionUserServiceImpl implements AuctionUserService {
             var mappedDto = mapper.map(lot, LotDto.class);
             if(lot.getImage() != null)
                 mappedDto.setImage(Base64.getEncoder().encodeToString(lot.getImage()));
+
+            if (lot.getBestBet() != null) {
+                mappedDto.setBestBet(mapper.map(lot.getBestBet(), BetDto.class));
+            }
             return mappedDto;
         }).toList();
     }

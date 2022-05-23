@@ -2,6 +2,7 @@ package com.example.auction.services.impl;
 
 import com.example.auction.controllers.exceptions.LotAlreadyExistException;
 import com.example.auction.controllers.exceptions.LotNotExistException;
+import com.example.auction.controllers.models.BetDto;
 import com.example.auction.controllers.models.LotDto;
 import com.example.auction.controllers.models.LotRequest;
 import com.example.auction.database.entities.LotEntity;
@@ -58,6 +59,7 @@ public class LotServiceImpl implements LotService {
 
         var mappedDto = mapper.map(lot, LotDto.class);
         mappedDto.setImage(Base64.getEncoder().encodeToString(lot.getImage()));
+        mappedDto.setBestBet(mapper.map(lot.getBestBet(), BetDto.class));
         return mappedDto;
     }
 

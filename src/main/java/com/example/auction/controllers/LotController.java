@@ -24,7 +24,7 @@ public class LotController {
         return lotService.getLot(lotId);
     }
 
-    @PostMapping("/private/")
+    @PostMapping("/private")
     public String addLot(@RequestBody LotRequest lotRequest, OurAuthToken ourAuthToken) throws UnsupportedEncodingException {
         return lotService.saveLot(lotRequest, ourAuthToken).getId();
     }
