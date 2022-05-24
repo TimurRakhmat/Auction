@@ -27,6 +27,7 @@ public class LotEntity {
     @CreationTimestamp
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime addDate;
+
     private boolean sold;
 
     private String name;
@@ -45,9 +46,6 @@ public class LotEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="bet")
     private Bet bestBet;
-
-
-    private byte[] image;
 
     ///////////////////////////////////////////////////////////////////////////
     //                      equals + hash

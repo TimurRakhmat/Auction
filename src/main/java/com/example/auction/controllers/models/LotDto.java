@@ -20,4 +20,5 @@ public class LotDto {
     private BetDto bestBet;
     private String linkToImage;
     private Integer popularity;
+    private boolean sold;
 }

@@ -38,7 +38,7 @@ public class BetServiceImpl implements BetService {
 
     @Override
     public BetDto saveBet(BetRequest betRequest, OurAuthToken ourAuthToken) throws BetStepException,
-            LotNotExistException, AuctionUserNotEnoughMoneyException {
+            LotNotExistException, AuctionUserNotEnoughMoneyException, LotIsSoldException {
 
         Optional<LotEntity> optionalLot = lotRepository.findOptionalById(betRequest.getLotId());
 
@@ -46,6 +46,10 @@ public class BetServiceImpl implements BetService {
             throw new LotNotExistException();
 
         LotEntity lot = optionalLot.get();
+
+        if (lot.isSold()){
+            throw new LotIsSoldException();
+        }
 
         AuctionUser user = auctionUserRepository.getById(ourAuthToken.getUserId());
 

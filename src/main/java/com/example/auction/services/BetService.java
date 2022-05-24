@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BetService {
     BetDto saveBet(BetRequest betRequest, OurAuthToken ourAuthToken) throws BetStepException,
-            LotNotExistException, AuctionUserNotEnoughMoneyException;
+            LotNotExistException, AuctionUserNotEnoughMoneyException, LotIsSoldException;
 
     BetDto getBet(String id) throws BetNotExistException;
 }

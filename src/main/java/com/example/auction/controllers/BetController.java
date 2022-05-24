@@ -22,7 +22,7 @@ public class BetController {
 
     @PostMapping("/private")
     public BetDto saveBet(@RequestBody BetRequest betRequest, OurAuthToken ourAuthToken) throws BetStepException,
-            LotNotExistException, AuctionUserNotEnoughMoneyException {
+            LotNotExistException, AuctionUserNotEnoughMoneyException, LotIsSoldException {
         return betService.saveBet(betRequest, ourAuthToken);
     }
 
