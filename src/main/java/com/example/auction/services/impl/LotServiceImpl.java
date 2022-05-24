@@ -78,7 +78,7 @@ public class LotServiceImpl implements LotService {
 
     @Override
     public List<LotDto> getAllLots() {
-        return lotRepository.findAll().stream()
+        return lotRepository.findAllBySoldIsFalse().stream()
                 .map(lotEntity -> mapper.map(lotEntity, LotDto.class)).collect(Collectors.toList());
     }
 
@@ -100,7 +100,7 @@ public class LotServiceImpl implements LotService {
 
     @Override
     public List<LotDto> getMostPopularLots() {
-        List<LotEntity> findLotEntities = lotRepository.findByOrderByPopularityDesc();
+        List<LotEntity> findLotEntities = lotRepository.findAllBySoldIsFalseOrderByPopularityDesc();
         findLotEntities.subList(0, Math.min(5, findLotEntities.size()));
         return findLotEntities.stream()
                 .map(lotEntity -> mapper.map(lotEntity, LotDto.class)).collect(Collectors.toList());
