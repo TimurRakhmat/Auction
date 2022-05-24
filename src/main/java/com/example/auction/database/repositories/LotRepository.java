@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface LotRepository extends  JpaRepository<LotEntity, String> {
     Optional<LotEntity> findOptionalById(String id);
-
+    List<LotEntity> findAllBySoldIsFalse();
     boolean existsById(String id);
-    List<LotEntity> findByOrderByPopularityDesc();
+    List<LotEntity> findAllBySoldIsFalseOrderByPopularityDesc();
 }

@@ -59,7 +59,7 @@ public class AuctionUserServiceImpl implements AuctionUserService {
 
         Optional<AuctionUser> existedUser = userRepository.findOptionalByEmail(user.getEmail());
         AuctionUser updatedUser = existedUser.get();
-        updatedUser.setBalance(user.getBalance());
+        updatedUser.setBalance(updatedUser.getBalance() + user.getBalance());
         userRepository.save(updatedUser);
 
         return mapper.map(existedUser, UserDto.class);
@@ -82,9 +82,8 @@ public class AuctionUserServiceImpl implements AuctionUserService {
     @Override
     public List<LotDto> getCurrentUserLots(OurAuthToken ourAuthToken){
         Optional<AuctionUser> existedUser = userRepository.findById(ourAuthToken.getUserId());
-        AuctionUser user = existedUser.get();
 
-        return user.getOwnLots().stream().map(lot -> {
+        return existedUser.get().getOwnLots().stream().map(lot -> {
             var mappedDto = mapper.map(lot, LotDto.class);
 
             if (lot.getBestBet() != null) {

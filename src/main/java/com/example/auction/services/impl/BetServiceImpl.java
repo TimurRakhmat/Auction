@@ -95,7 +95,9 @@ public class BetServiceImpl implements BetService {
         Bet findBet = findOptionalBet.get();
 
         BetDto mappedBetDto = modelMapper.map(findBet, BetDto.class);
+
         mappedBetDto.setOwnLotId(findBet.getOwnLot().getId());
+
         return mappedBetDto;
     }
 
